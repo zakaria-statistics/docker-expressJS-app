@@ -4,10 +4,16 @@ services:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - ./:/app:ro
-      - /app/node_modules
     environment:
-      - ports=3000
-    #env_file:
-    #  - ./.env
+      - PORT=3000
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=1234
+    volumes:
+      - mongo-db:/data/db
+
+volumes:
+  mongo-db:
