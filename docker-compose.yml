@@ -6,12 +6,19 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=1234
+    healthcheck:
+      test: ["CMD", "mongo", "--username", "admin", "--password", "1234", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     volumes:
       - mongo-db:/data/db
 
