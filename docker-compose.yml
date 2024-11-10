@@ -15,7 +15,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=1234
     healthcheck:
-      test: ["CMD", "mongo", "--username", "admin", "--password", "1234", "--eval", "db.adminCommand('ping')"]
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u admin -p 1234 --quiet | grep 1
       interval: 30s
       timeout: 10s
       retries: 5
