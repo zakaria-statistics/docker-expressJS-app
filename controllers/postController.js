@@ -67,7 +67,7 @@ exports.createPost = async (req, res, next) => {
     }
 };
 
-// Update an existing post by ID
+// Update an existing post by ID (PUT method)
 exports.updatePost = async (req, res, next) => {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
@@ -95,6 +95,40 @@ exports.updatePost = async (req, res, next) => {
         });
     }
 };
+
+// Partial update an existing post by ID (PATCH method)
+exports.patchPost = async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({
+                status: "fail",
+                message: "Post not found",
+            });
+        }
+
+        // Update only the fields passed in the request body
+        Object.keys(req.body).forEach(key => {
+            post[key] = req.body[key];
+        });
+
+        await post.save();
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                post,
+            },
+        });
+    } catch (e) {
+        res.status(400).json({
+            status: "fail",
+            message: e.message,
+        });
+    }
+};
+
 
 // Delete a post by ID
 exports.deletePost = async (req, res, next) => {
