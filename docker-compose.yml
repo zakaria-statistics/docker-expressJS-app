@@ -6,8 +6,11 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
     depends_on:
       - mongo
+      - redis
 
   mongo:
     image: mongo
@@ -21,6 +24,13 @@ services:
       retries: 5
     volumes:
       - mongo-db:/data/db
+  redis:
+    image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
   mongo-db:

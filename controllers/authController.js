@@ -41,6 +41,14 @@ exports.login = async (req, res) => {
                 message: "Incorrect username or password"
             });
         }
+
+        // Store user data in session
+        req.session.userId = user._id;
+        req.session.username = user.username;
+
+        console.log('Session data after login:', req.sessionID); // Log the session data
+
+
         res.status(200).json({
             status: "success",
             message: "Logged in successfully",
