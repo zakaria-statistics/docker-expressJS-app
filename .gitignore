@@ -1,1 +1,84 @@
-/node_modules
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Docker
+.docker/
+docker-compose.override.yml
+docker-compose.dev.yml
+Dockerfile*
+*.dockerfile
+.dockerignore
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Databases
+# MongoDB Data (if used locally or in development)
+mongo-data/
+
+# Redis Data (if used locally or in development)
+redis-data/
+
+# PostgreSQL Data (if used locally or in development)
+pg-data/
+
+# Temp and Cache Files
+tmp/
+temp/
+*.bak
+*.swp
+*.swo
+
+# IDE/Editor Specific
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# MacOS Specific
+.DS_Store
+
+# Windows Specific
+Thumbs.db
+ehthumbs.db
+
+# Build and Distribution Files
+dist/
+build/
+out/
+coverage/
+
+# Package Distribution Files
+*.tgz
+*.zip
+
+# Server-side Data (session, uploads, etc.)
+uploads/
+sessions/
+
+# SQLite databases (if applicable)
+*.sqlite
+*.sqlite3
+
+# Frontend Build Files (if using frontend frameworks like React, Angular, Vue)
+build/
+public/
+dist/
+
+# Other sensitive files
+*.pem
+*.key
+*.crt
+
+#lab files
+lab/

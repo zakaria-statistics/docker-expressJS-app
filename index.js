@@ -48,7 +48,7 @@ let redisClient = redis.createClient({
                 cookie: {
                     secure: false, // Set to true in production with HTTPS
                     httpOnly: true,
-                    maxAge: 30 * 60 * 1000,
+                    maxAge: 60000,
                 },
             }));
         } catch (error) {
@@ -64,6 +64,10 @@ let redisClient = redis.createClient({
         
         app.use("/api/v1/posts", postRouter);
         app.use("/api/v1/users", userRouter);
+        app.get("/check-session", (req, res) => {
+            res.json({ session: req.session });
+        });
+        
         
         const port = process.env.PORT || 3000;
         app.listen(port, () => console.log(`Listening on port ${port}`));

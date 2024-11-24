@@ -9,6 +9,7 @@ exports.signUp = async (req, res) => {
             username,
             password: hashpassword
         });
+        req.session.user = newUser;
         res.status(201).json({
             status: 'success',
             data: {
@@ -42,20 +43,22 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Store user data in session
-        req.session.userId = user._id;
-        req.session.username = user.username;
-
-        console.log('Session data after login:', req.sessionID); // Log the session data
-
-
-        res.status(200).json({
-            status: "success",
-            message: "Logged in successfully",
-            data: {
-                user
-            }
-        });
+         // Explicitly assign and save the user object in the session
+         req.session.user = user;
+ 
+         req.session.save((err) => {
+             if (err) {
+                 console.error("Session save error:", err);
+                 return res.status(500).json({ status: "fail", message: "Session save failed" });
+             }
+             console.log("Session after save:", req.session);
+ 
+             res.status(200).json({
+                 status: "success",
+                 message: "Logged in successfully",
+                 data: { user }
+             });
+         });
     } catch (error) {
         console.log("error => ", error);
         res.status(500).json({
