@@ -55,7 +55,7 @@ let redisClient = redis.createClient({
             console.error('Session middleware error:', error);
         }
         
-        app.get("/", (req, res) => {
+        app.get("/api/v1", (req, res) => {
             res.send("<h2>Hi There</h2>");
         });
         
@@ -64,7 +64,7 @@ let redisClient = redis.createClient({
         
         app.use("/api/v1/posts", postRouter);
         app.use("/api/v1/users", userRouter);
-        app.get("/check-session", (req, res) => {
+        app.get("/api/v1/check-session", (req, res) => {
             res.json({ session: req.session });
         });
         
