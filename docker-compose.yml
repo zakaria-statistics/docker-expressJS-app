@@ -16,7 +16,7 @@ services:
       - nginx
 
   mongo:
-    image: mongo
+    image: mongo:4.4
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=1234
