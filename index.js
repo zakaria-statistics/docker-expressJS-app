@@ -36,10 +36,11 @@ let redisClient = redis.createClient({
         
         connectWithRetry();
         
-        app.use(cors());
+        app.use(cors({}));
         
         // Session middleware
         try {
+            app.enable("trust proxy");
             app.use(session({
                 store: new RedisStore({ client: redisClient }),
                 secret: SESSION_SECRET,
@@ -57,6 +58,7 @@ let redisClient = redis.createClient({
         
         app.get("/api/v1", (req, res) => {
             res.send("<h2>Hi There</h2>");
+            console.log("hi, it ran here");
         });
         
         const postRouter = require("./routes/postRoutes");
