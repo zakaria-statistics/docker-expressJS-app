@@ -21,20 +21,30 @@ let redisClient = redis.createClient({
         app.use(express.json());
         
         const cors = require("cors");
+        require('dotenv').config();  // Load environment variables from .env file
         
         const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
-        
+        console.log("mongo => ", mongoUrl)
         const connectWithRetry = () => {
             mongoose
-                .connect(mongoUrl)
+                .connect(mongoUrl, {
+                    useNewUrlParser: true,    // Parse MongoDB connection URL
+                    useUnifiedTopology: true, // Use the new connection engine
+                    retryWrites: true         // Automatically retry write operations
+                })
                 .then(() => console.log("Successfully connected to DB"))
                 .catch((e) => {
-                    console.log("Error connecting to DB => ", e);
-                    setTimeout(connectWithRetry, 5000);
+                    console.log("Error connecting to DB => ", e.message);
+                    setTimeout(connectWithRetry, 5000); // Retry after 5 seconds
                 });
         };
         
-        connectWithRetry();
+        if (!process.env.MONGO_USER || !process.env.MONGO_PASSWORD || !process.env.MONGO_IP || !process.env.MONGO_PORT) {
+            console.error("Missing MongoDB environment variables. Please check MONGO_USER, MONGO_PASSWORD, MONGO_IP, and MONGO_PORT.");
+            process.exit(1);  // Exit if any variable is missing
+        } else {
+            connectWithRetry();  // Start the connection retry loop
+        }
         
         app.use(cors({}));
         
@@ -43,7 +53,7 @@ let redisClient = redis.createClient({
             app.enable("trust proxy");
             app.use(session({
                 store: new RedisStore({ client: redisClient }),
-                secret: SESSION_SECRET,
+                secret: "secret",
                 saveUninitialized: false,
                 resave: false,
                 cookie: {

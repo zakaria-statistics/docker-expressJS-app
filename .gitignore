@@ -82,3 +82,6 @@ dist/
 
 #lab files
 lab/
+
+#env config
+.env
