@@ -39,7 +39,7 @@ let redisClient = redis.createClient({
                 });
         };
         
-        if (!process.env.MONGO_USER || !process.env.MONGO_PASSWORD || !process.env.MONGO_IP || !process.env.MONGO_PORT) {
+        if (!MONGO_USER || !MONGO_PASSWORD || !MONGO_IP || !MONGO_PORT) {
             console.error("Missing MongoDB environment variables. Please check MONGO_USER, MONGO_PASSWORD, MONGO_IP, and MONGO_PORT.");
             process.exit(1);  // Exit if any variable is missing
         } else {
