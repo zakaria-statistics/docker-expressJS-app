@@ -53,7 +53,7 @@ let redisClient = redis.createClient({
             app.enable("trust proxy");
             app.use(session({
                 store: new RedisStore({ client: redisClient }),
-                secret: "secret",
+                secret: SESSION_SECRET,
                 saveUninitialized: false,
                 resave: false,
                 cookie: {
