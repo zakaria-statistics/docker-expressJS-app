@@ -11,10 +11,11 @@ services:
           memory: '100M'
       replicas: 8
       restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        condition: none
+        #condition: any
+        #delay: 5s
+        #max_attempts: 3
+        #window: 120s
       update_config:
         parallelism: 2
         delay: 15s
