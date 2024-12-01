@@ -8,6 +8,9 @@ let RedisStore = require("connect-redis").default;
 
 let redisClient = redis.createClient({
     url: `redis://${REDIS_URL}:${REDIS_PORT}`,
+    socket: {
+        connectTimeout: 10000, // Increase to 10 seconds
+    },
 });
 
 (async () => {
